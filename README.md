@@ -1,2 +1,3 @@
 # battery-planner
-create nickel strip routes for 18650/21700/etc based e-bike batteries
+create cell layouts, nickel strip routes, and BMS connections for 18650/21700/etc based e-bike batteries
+Made for FOOP H, and also for MaxLi Batteries 
