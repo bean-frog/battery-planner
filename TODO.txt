@@ -1,12 +1,19 @@
+homescreen: open from local storage*, import from JSON, start new
 Export (PNG, JPEG, PDF, JSON), export front/back/both
-import json
-local storage for backup
+import json from file or paste
+local storage* for json storage, each project is a key w/prefix for selection, value is [{...grid}, {...nickelStrip}]
 nickel strip placement mode
+store nickel strip segments in separate object, each entry is an array of points, connect the dots basically, toggleable nickel strip display
 auto nickel strip routing
 front/back (daisyui diff)
 show possible s/p configs given num cells
-show BMS and BMS connections (toggle XT60/XT90 output, toggle XT60/Barrel Jack input)
+show BMS and BMS connections (toggle XT60/XT90 output, toggle XT60/Barrel Jack input), connections are stored in grid object udner each cell, ie. bmsConnection: <n | gnd> where n is a sample wire num, gnd is the black sample wire
 clean up file structure (move stuff to ./components)
 create logo .ico and .svg
 keyboard shortcuts for polarity mode, nickel strip mode
-input battery type, then estimate dimensions (toggleable label)
+input battery type or custom dimensions, then estimate pack dimensions (toggleable labels on x and y)
+
+
+
+
+* maybe use IndexedDB instead, idk though
