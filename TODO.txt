@@ -12,7 +12,8 @@ clean up file structure (move stuff to ./components)
 create logo .ico and .svg
 keyboard shortcuts for polarity mode, nickel strip mode
 input battery type or custom dimensions, then estimate pack dimensions (toggleable labels on x and y)
-
+daisyui theme selector with saadeghi/theme-change
+figure out how to make canvas based stuff follow daisyui theme
 
 
 
