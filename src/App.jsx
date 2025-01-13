@@ -45,17 +45,16 @@ const App = () => {
       if (value.polarity === 'positive') {
         ctx.fillStyle = 'gray';
         ctx.beginPath();
-        ctx.arc(screenX + CELL_SIZE / 2, screenY + CELL_SIZE / 2, CELL_SIZE / 4, 0, Math.PI * 2);
+        ctx.arc(screenX + CELL_SIZE / 2, screenY + CELL_SIZE / 2, CELL_SIZE * 0.24, 0, Math.PI * 2);
         ctx.fill();
       } else if (value.polarity === 'negative') {
         ctx.fillStyle = 'gray';
         ctx.beginPath();
-        ctx.arc(screenX + CELL_SIZE / 2, screenY + CELL_SIZE / 2, CELL_SIZE * 0.4, 0, Math.PI * 2);
+        ctx.arc(screenX + CELL_SIZE / 2, screenY + CELL_SIZE / 2, CELL_SIZE * 0.34, 0, Math.PI * 2);
         ctx.fill();
       }
     });
 
-    // Draw drag region
     if (dragRegion) {
       const { startX, startY, endX, endY, button } = dragRegion;
       const x = Math.min(startX, endX) * CELL_SIZE - viewOffset.x;
@@ -65,20 +64,25 @@ const App = () => {
     
       // Determine operation and stroke style
       let operationLabel = '';
+      let backgroundColor = '';
       if (isPolarityMode) {
-        if (button === 0) {// polarity mode, positive
-          ctx.strokeStyle = 'red'; 
+        if (button === 0) { // polarity mode, positive
+          ctx.strokeStyle = 'red';
+          backgroundColor = 'red';
           operationLabel = 'Make Positive';
-        } else if (button === 2) {// polarity mode, negative
-          ctx.strokeStyle = 'black'; 
+        } else if (button === 2) { // polarity mode, negative
+          ctx.strokeStyle = 'black';
+          backgroundColor = 'black';
           operationLabel = 'Make Negative';
         }
       } else {
         if (button === 0) { // placement mode, add cells
-          ctx.strokeStyle = 'green'; 
+          ctx.strokeStyle = 'green';
+          backgroundColor = 'green';
           operationLabel = 'Add Cells';
         } else if (button === 2) { // placement mode, remove cells
           ctx.strokeStyle = 'red';
+          backgroundColor = 'red';
           operationLabel = 'Remove Cells';
         }
       }
@@ -87,7 +91,7 @@ const App = () => {
       ctx.lineWidth = 2;
       ctx.strokeRect(x, y, width, height);
     
-      // Draw text
+      // draw operation text
       ctx.fillStyle = 'white';
       ctx.font = 'bold 16px Arial';
       ctx.textAlign = 'center';
@@ -97,7 +101,34 @@ const App = () => {
         x + width / 2, // Center X
         y + height / 2 // Center Y
       );
+    
+      const sizeLabel = `${Math.abs(endX - startX) + 1} x ${Math.abs(endY - startY) + 1}`; // "width x height"
+      
+      const labelX = x + width - 10;
+      const labelY = y + height - 10
+    
+      // size text background
+      ctx.fillStyle = backgroundColor;
+      ctx.strokeStyle = backgroundColor;
+      ctx.lineWidth = 4; 
+      const textWidth = ctx.measureText(sizeLabel).width;
+      const textHeight = 18;
+    
+     
+      ctx.fillRect(labelX - textWidth - 10, labelY - textHeight - 5, textWidth + 10, textHeight + 5);
+    
+      // selection size text
+      ctx.fillStyle = 'white';
+      ctx.textAlign = 'center'; 
+      ctx.textBaseline = 'middle';
+      ctx.fillText(
+        sizeLabel,
+        labelX - textWidth / 2, 
+        labelY - textHeight / 2 
+      );
     }
+    
+    
     
     
     
@@ -207,6 +238,7 @@ const App = () => {
             >
               {isPolarityMode ? 'Exit Polarity Mode' : 'Enter Polarity Mode'}
             </button>
+            <button onClick={() => {console.log(grid)}} className="btn btn-primary btn-sm">Log Grid</button>
             <p>
               Use <strong>left-click</strong> to place batteries or set polarity (in polarity mode).
               Use <strong>right-click</strong> to remove batteries or set negative polarity.
@@ -218,7 +250,7 @@ const App = () => {
 
       <canvas
         ref={canvasRef}
-        className="border border-gray-300 " // Add margin to prevent canvas overlap with menu
+        className="border border-gray-300 " 
         onMouseDown={handleMouseDown}
         onMouseMove={handleMouseMove}
         onMouseUp={handleMouseUp}

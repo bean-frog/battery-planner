@@ -1,4 +1,6 @@
-Export (PNG, JPEG, PDF, JSON?), export front/back/both
+Export (PNG, JPEG, PDF, JSON), export front/back/both
+import json
+local storage for backup
 nickel strip placement mode
 auto nickel strip routing
 front/back (daisyui diff)
@@ -7,3 +9,4 @@ show BMS and BMS connections (toggle XT60/XT90 output, toggle XT60/Barrel Jack i
 clean up file structure (move stuff to ./components)
 create logo .ico and .svg
 keyboard shortcuts for polarity mode, nickel strip mode
+input battery type, then estimate dimensions (toggleable label)
